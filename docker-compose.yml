@@ -1,0 +1,51 @@
+services:
+  backend1:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend1
+    environment:
+      - SERVICE_NAME=backend-1
+      - PORT=8081
+      - LATENCY_JITTER_MS=100
+    expose:
+      - "8081"
+
+  backend2:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend2
+    environment:
+      - SERVICE_NAME=backend-2
+      - PORT=8081
+      - LATENCY_JITTER_MS=100
+    expose:
+      - "8081"
+
+  backend3:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend3
+    environment:
+      - SERVICE_NAME=backend-3
+      - PORT=8081
+      - LATENCY_JITTER_MS=100
+    expose:
+      - "8081"
+
+  lb:
+    build:
+      context: ./lb
+      dockerfile: Dockerfile
+    container_name: lb
+    environment:
+      - PORT=8080
+      - BACKENDS=http://backend1:8081,http://backend2:8081,http://backend3:8081
+    ports:
+      - "8080:8080"
+    depends_on:
+      - backend1
+      - backend2
+      - backend3

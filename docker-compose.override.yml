@@ -1,0 +1,11 @@
+# docker-compose.override.yml
+services:
+  backend1:
+    ports:
+      - "18081:8081"
+  backend2:
+    ports:
+      - "18082:8081"
+  backend3:
+    ports:
+      - "18083:8081"
